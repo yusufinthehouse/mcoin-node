@@ -4,31 +4,39 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
 
-// var index = require('./routes/index');
-// var users = require('./routes/users');
+// global environment
+global.__base = __dirname + '/';
+global.base_helpers = require(__base + 'helpers/base');
+global.secret_key = "whatdoyouthingaboutmyrahasia";
+
+// define router file
+var index_router = require(__base + 'routes/index');
+var user_router = require(__base + 'routes/user');
 
 var authenticateController=require('./controllers/authenticate-controller');
 process.env.SECRET_KEY="thisismysecretkey";
 
+// initiate express 
 var app = express();
-var router=express.Router();
-var jwt= require("jsonwebtoken");
+var router = express.Router();
 
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', index);
-// app.use('/users', users);
+// Define route
+app.use('/api/v1/users', user_router);
+app.use('/api/v1', index_router);
 
 app.post('/api/authenticate',authenticateController.authenticate);
 app.use('/secure-api',router);
