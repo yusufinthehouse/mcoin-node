@@ -3,6 +3,9 @@ var jwt = require('jsonwebtoken');
 var connection = require('./../config/mysql');
 
 module.exports = { 
+    /**
+     * Autheticating user using JWT
+     */
     login : function(req, res) {
         var email = req.body.email;
         var password = req.body.password; 

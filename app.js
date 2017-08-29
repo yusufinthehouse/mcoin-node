@@ -15,9 +15,6 @@ global.secret_key = "whatdoyouthingaboutmyrahasia";
 var index_router = require(__base + 'routes/index');
 var user_router = require(__base + 'routes/user');
 
-var authenticateController=require('./controllers/authenticate-controller');
-process.env.SECRET_KEY="thisismysecretkey";
-
 // initiate express 
 var app = express();
 var router = express.Router();
@@ -38,7 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/users', user_router);
 app.use('/api/v1', index_router);
 
-app.post('/api/authenticate',authenticateController.authenticate);
 app.use('/secure-api',router);
 
 // validation middleware

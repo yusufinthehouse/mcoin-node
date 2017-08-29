@@ -3,7 +3,7 @@ var router = express.Router();
 
 var user_controller = require(__base + 'controllers/user');
 
-/* GET users listing. */
+/* CRUD for user */
 router.post('/', user_controller.create);
 router.get('/:id', user_controller.get);
 router.put('/:id', user_controller.update);

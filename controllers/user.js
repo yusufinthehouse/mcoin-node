@@ -1,12 +1,15 @@
 var connection = require('./../config/mysql');
 
 module.exports = { 
+    /**
+     * Create user on system
+     */
     create: function(req, res) {
         var email = req.body.email;
         var password = req.body.password;
         var full_name = req.body.full_name;
         var birth_date = req.body.birth_date;
-        var photo = 'photo';
+        var photo = req.body.photo;
 
         connection.query('SELECT * FROM users WHERE email = ?',[email], function (error, results, fields) {
             if (error) {
@@ -30,6 +33,9 @@ module.exports = {
         });
     },
 
+    /**
+     * Get data user based on its id
+     */
     get: function(req, res) {
         var user_id = req.params.id;
         connection.query('SELECT * FROM users WHERE id = ?',[user_id], function (error, results, fields) {
@@ -45,6 +51,9 @@ module.exports = {
         });
     },
         
+    /**
+     * Update user data refer to its id
+     */
     update: function(req, res) {
         var user_id = req.params.id;
 
@@ -52,7 +61,7 @@ module.exports = {
         var password = req.body.password;
         var full_name = req.body.full_name;
         var birth_date = req.body.birth_date;
-        var photo = 'photo';
+        var photo = req.body.photo;
 
         connection.query('SELECT * FROM users WHERE id = ?',[user_id], function (error, results, fields) {
             if (error) {
@@ -76,6 +85,9 @@ module.exports = {
         });
     },
 
+    /**
+     * Delete user data based on its id
+     */
     delete : function(req, res) {
         var user_id = req.params.id;
         
